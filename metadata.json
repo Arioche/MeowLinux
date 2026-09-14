@@ -1,0 +1,7 @@
+{
+  "name": "MeowLinux",
+  "description": "Gamified Linux learning platform based on LPIC levels featuring interactive terminal challenges, badge certifications, and cat-themed sysadmin quests.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

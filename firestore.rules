@@ -1,0 +1,95 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidUserProfile(data) {
+      return data.userId == request.auth.uid &&
+        data.email is string && data.email.size() <= 255 &&
+        data.userName is string && data.userName.size() >= 1 && data.userName.size() <= 60 &&
+        data.xp is number && data.xp >= 0 &&
+        data.streak is number && data.streak >= 0 &&
+        (!('longestStreak' in data) || (data.longestStreak is number && data.longestStreak >= 0)) &&
+        (!('freezeTokens' in data) || (data.freezeTokens is number && data.freezeTokens >= 0)) &&
+        (!('callsign' in data) || (data.callsign is string && data.callsign.size() <= 80)) &&
+        (!('userBio' in data) || (data.userBio is string && data.userBio.size() <= 300)) &&
+        (!('avatarId' in data) || (data.avatarId is string && data.avatarId.size() <= 10)) &&
+        (!('preferredShell' in data) || (data.preferredShell is string && data.preferredShell.size() <= 50)) &&
+        (!('favoriteBadgeId' in data) || (data.favoriteBadgeId is string && data.favoriteBadgeId.size() <= 60)) &&
+        (!('lastActiveDate' in data) || (data.lastActiveDate is string && data.lastActiveDate.size() <= 20)) &&
+        (!('totalCommandsRun' in data) || (data.totalCommandsRun is number && data.totalCommandsRun >= 0)) &&
+        (!('completedChallenges' in data) || (data.completedChallenges is list && data.completedChallenges.size() <= 200)) &&
+        (!('earnedBadges' in data) || (data.earnedBadges is list && data.earnedBadges.size() <= 100)) &&
+        (!('unlockedSkills' in data) || (data.unlockedSkills is list && data.unlockedSkills.size() <= 100)) &&
+        (!('unlockedLevels' in data) || (data.unlockedLevels is list && data.unlockedLevels.size() <= 20)) &&
+        (!('completedBossBattles' in data) || (data.completedBossBattles is list && data.completedBossBattles.size() <= 50)) &&
+        (!('activeContainerId' in data) || (data.activeContainerId is string && data.activeContainerId.size() <= 50)) &&
+        (!('soundEnabled' in data) || data.soundEnabled is bool) &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    function isValidPublicProfile(data) {
+      return data.userId == request.auth.uid &&
+        data.userName is string && data.userName.size() >= 1 && data.userName.size() <= 60 &&
+        data.avatarId is string && data.avatarId.size() <= 10 &&
+        data.xp is number && data.xp >= 0 &&
+        data.streak is number && data.streak >= 0 &&
+        (!('callsign' in data) || (data.callsign is string && data.callsign.size() <= 80)) &&
+        (!('level' in data) || (data.level is number && data.level >= 1)) &&
+        (!('badgesCount' in data) || (data.badgesCount is number && data.badgesCount >= 0)) &&
+        (!('totalCommandsRun' in data) || (data.totalCommandsRun is number && data.totalCommandsRun >= 0)) &&
+        data.updatedAt is timestamp;
+    }
+
+    // User Profile Documents (Private)
+    match /users/{userId} {
+      allow get: if isValidId(userId) && isOwner(userId);
+      allow list: if false; // PII Guard: No bulk querying of users collection
+      allow create: if isValidId(userId) && isOwner(userId) && isValidUserProfile(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+      allow update: if isValidId(userId) && isOwner(userId) && isValidUserProfile(incoming()) &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().userId == existing().userId &&
+        incoming().updatedAt == request.time;
+      allow delete: if isValidId(userId) && isOwner(userId);
+    }
+
+    // Leaderboard entries (Public to authenticated users)
+    match /leaderboard/{userId} {
+      allow get: if isValidId(userId) && isSignedIn();
+      allow list: if isSignedIn();
+      allow create: if isValidId(userId) && isOwner(userId) && isValidPublicProfile(incoming()) &&
+        incoming().updatedAt == request.time;
+      allow update: if isValidId(userId) && isOwner(userId) && isValidPublicProfile(incoming()) &&
+        incoming().userId == existing().userId &&
+        incoming().updatedAt == request.time;
+      allow delete: if isValidId(userId) && isOwner(userId);
+    }
+  }
+}

@@ -1,0 +1,271 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Times New Roman", Times, "Liberation Serif", serif;
+  --font-serif: "Times New Roman", Times, "Liberation Serif", serif;
+  --font-mono: "Ubuntu Mono", "DejaVu Sans Mono", "Liberation Mono", monospace;
+}
+
+/* Global Typography: Times New Roman */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+html,
+body,
+#root,
+* {
+  font-family: "Times New Roman", Times, "Liberation Serif", serif;
+}
+
+/* Default Linux Monospace Font for Sandbox, Terminal, Code & Shortcuts */
+.font-mono,
+.terminal-sandbox,
+pre,
+code,
+kbd,
+samp,
+#terminal-input {
+  font-family: "Ubuntu Mono", "DejaVu Sans Mono", "Liberation Mono", Consolas, "Courier New", monospace !important;
+}
+
+input:not(#terminal-input),
+button,
+select,
+textarea,
+.font-sans,
+.font-serif {
+  font-family: "Times New Roman", Times, "Liberation Serif", serif !important;
+}
+
+/* =========================================================================
+   FONT SIZE ENFORCEMENT: All text at least 12px (upgraded to 13px - 15px)
+   ========================================================================= */
+
+.text-\[8px\],
+.text-\[9px\],
+.text-\[10px\],
+.text-\[10\.5px\],
+.text-\[11px\] {
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+}
+
+.text-xs {
+  font-size: 13.5px !important;
+  line-height: 1.4 !important;
+}
+
+.text-sm {
+  font-size: 15px !important;
+  line-height: 1.45 !important;
+}
+
+.text-base {
+  font-size: 17px !important;
+  line-height: 1.5 !important;
+}
+
+/* Prevent any element in the DOM from rendering below 12px */
+body, input, button, select, textarea, kbd, pre, code, span, p, label, a, div, h1, h2, h3, h4, h5, h6 {
+  min-font-size: 12px;
+}
+
+/* Base Body Styles */
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+/* =========================================================================
+   LIGHT THEME OVERRIDES
+   Activates when html or container has .light class or data-theme="light"
+   ========================================================================= */
+
+html.light,
+body.light,
+.light {
+  color-scheme: light;
+  background-color: #f4f6f9 !important;
+  color: #1e293b !important;
+}
+
+/* Main background containers */
+.light .bg-\[\#0b0e17\],
+.light .bg-\[\#0f111a\],
+.light .bg-\[\#0e111a\],
+.light .bg-\[\#0f121d\] {
+  background-color: #f4f6f9 !important;
+  color: #1e293b !important;
+}
+
+/* Navigation bar */
+.light header,
+.light .bg-\[\#131722\]\/95,
+.light .bg-\[\#131722\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Surface cards, modals and panels */
+.light .bg-\[\#11141f\],
+.light .bg-\[\#141926\],
+.light .bg-\[\#121724\],
+.light .bg-\[\#131826\],
+.light .bg-\[\#161b2a\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Secondary surfaces & nested pill bars */
+.light .bg-slate-900,
+.light .bg-slate-900\/90,
+.light .bg-slate-900\/80,
+.light .bg-slate-900\/60,
+.light .bg-slate-900\/50,
+.light .bg-slate-900\/40,
+.light .bg-slate-950,
+.light .bg-slate-950\/80 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light .bg-slate-800,
+.light .bg-slate-800\/80,
+.light .bg-slate-800\/60,
+.light .bg-slate-800\/50 {
+  background-color: #edf2f7 !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Light Mode Borders */
+.light .border-slate-800,
+.light .border-slate-800\/90,
+.light .border-slate-800\/80,
+.light .border-slate-700,
+.light .border-slate-700\/80,
+.light .border-slate-700\/50 {
+  border-color: #e2e8f0 !important;
+}
+
+/* Light Mode Text Contrasts */
+.light .text-slate-100,
+.light .text-slate-200 {
+  color: #0f172a !important;
+}
+
+.light .text-slate-300 {
+  color: #1e293b !important;
+}
+
+.light .text-slate-400 {
+  color: #475569 !important;
+}
+
+.light .text-slate-500 {
+  color: #64748b !important;
+}
+
+/* Terminal Component Light Theme */
+.light .bg-\[\#0a0d14\] {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 10px -6px rgba(0, 0, 0, 0.06);
+}
+
+.light .bg-\[\#121622\] {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light .bg-\[\#10141f\] {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+.light #terminal-input {
+  color: #0f172a !important;
+  caret-color: #059669 !important;
+}
+
+.light pre.text-slate-300 {
+  color: #1e293b !important;
+}
+
+.light .text-emerald-400 {
+  color: #059669 !important;
+}
+
+.light .text-blue-400 {
+  color: #1d4ed8 !important;
+}
+
+.light .text-amber-400 {
+  color: #b45309 !important;
+}
+
+.light .text-teal-400 {
+  color: #0d9488 !important;
+}
+
+.light .text-cyan-400 {
+  color: #0891b2 !important;
+}
+
+/* Quick pills in Light mode */
+.light #quick-cmd-ls--la,
+.light [id^="quick-cmd-"] {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+.light [id^="quick-cmd-"]:hover {
+  background-color: #e2e8f0 !important;
+  color: #059669 !important;
+  border-color: #059669 !important;
+}
+
+/* Buttons in Light Mode */
+.light button.bg-slate-900\/80,
+.light button.bg-slate-900 {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+.light button.bg-slate-900\/80:hover,
+.light button.bg-slate-900:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* Modals backdrop in Light mode */
+.light .bg-slate-950\/80,
+.light .bg-slate-950\/70,
+.light .bg-slate-950\/60 {
+  background-color: rgba(15, 23, 42, 0.45) !important;
+}

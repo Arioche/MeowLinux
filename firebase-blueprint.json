@@ -1,0 +1,195 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Private user account, progress, terminal drills stats, and settings",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Owner authentication UID",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "description": "User account email address",
+          "maxLength": 255
+        },
+        "userName": {
+          "type": "string",
+          "description": "Sysadmin display name",
+          "maxLength": 60
+        },
+        "callsign": {
+          "type": "string",
+          "description": "Feline sysadmin title/callsign",
+          "maxLength": 80
+        },
+        "userBio": {
+          "type": "string",
+          "description": "User bio and certification goals",
+          "maxLength": 300
+        },
+        "avatarId": {
+          "type": "string",
+          "description": "Feline avatar emoji identifier",
+          "maxLength": 10
+        },
+        "preferredShell": {
+          "type": "string",
+          "description": "Preferred shell environment path",
+          "maxLength": 50
+        },
+        "favoriteBadgeId": {
+          "type": "string",
+          "description": "Pinned showcase badge ID",
+          "maxLength": 60
+        },
+        "xp": {
+          "type": "number",
+          "description": "Total accumulated experience points"
+        },
+        "streak": {
+          "type": "number",
+          "description": "Current active day streak"
+        },
+        "longestStreak": {
+          "type": "number",
+          "description": "Longest recorded day streak"
+        },
+        "freezeTokens": {
+          "type": "number",
+          "description": "Remaining streak freeze tokens"
+        },
+        "lastActiveDate": {
+          "type": "string",
+          "description": "Last active ISO date string YYYY-MM-DD",
+          "maxLength": 20
+        },
+        "totalCommandsRun": {
+          "type": "number",
+          "description": "Cumulative terminal commands run count"
+        },
+        "completedChallenges": {
+          "type": "array",
+          "description": "List of solved LPIC challenge IDs"
+        },
+        "earnedBadges": {
+          "type": "array",
+          "description": "List of unlocked badge IDs"
+        },
+        "unlockedSkills": {
+          "type": "array",
+          "description": "List of unlocked skill tree node IDs"
+        },
+        "unlockedLevels": {
+          "type": "array",
+          "description": "List of unlocked LPIC certification tiers"
+        },
+        "completedBossBattles": {
+          "type": "array",
+          "description": "List of solved boss crisis battle IDs"
+        },
+        "activeContainerId": {
+          "type": "string",
+          "description": "Active container sandbox preset ID",
+          "maxLength": 50
+        },
+        "soundEnabled": {
+          "type": "boolean",
+          "description": "Sound effects enabled flag"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Document creation server timestamp"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Document update server timestamp"
+        }
+      },
+      "required": [
+        "userId",
+        "email",
+        "userName",
+        "xp",
+        "streak",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "PublicProfile": {
+      "title": "PublicProfile",
+      "description": "Public leaderboard data showing rank, xp, and streak for competitive feline sysadmins",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "User UID",
+          "maxLength": 128
+        },
+        "userName": {
+          "type": "string",
+          "description": "Display name",
+          "maxLength": 60
+        },
+        "callsign": {
+          "type": "string",
+          "description": "Sysadmin title",
+          "maxLength": 80
+        },
+        "avatarId": {
+          "type": "string",
+          "description": "Feline avatar emoji",
+          "maxLength": 10
+        },
+        "xp": {
+          "type": "number",
+          "description": "Current total XP",
+          "maximum": 1000000
+        },
+        "level": {
+          "type": "number",
+          "description": "Calculated rank level"
+        },
+        "streak": {
+          "type": "number",
+          "description": "Day streak count"
+        },
+        "badgesCount": {
+          "type": "number",
+          "description": "Number of badges earned"
+        },
+        "totalCommandsRun": {
+          "type": "number",
+          "description": "Total terminal commands executed"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update server timestamp"
+        }
+      },
+      "required": [
+        "userId",
+        "userName",
+        "avatarId",
+        "xp",
+        "streak",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Private user account, progress, terminal drills stats, and settings"
+    },
+    "/leaderboard/{userId}": {
+      "schema": "PublicProfile",
+      "description": "Public leaderboard entry for user rankings"
+    }
+  }
+}

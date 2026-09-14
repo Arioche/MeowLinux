@@ -1,0 +1,48 @@
+import { ContainerPreset } from '../types';
+
+export const CONTAINER_PRESETS: ContainerPreset[] = [
+  {
+    id: 'alpine-319',
+    name: 'Alpine Linux 3.19 (Feline Edition)',
+    distro: 'Alpine Linux',
+    tag: '3.19-musl-feline',
+    kernel: 'Linux 6.6.14-alpine-meow',
+    pkgManager: 'apk (Alpine Package Keeper)',
+    shell: '/bin/ash',
+    desc: 'Ultra-lightweight 5.8MB container footprint built on musl libc and busybox. Ideal for embedded feline microservices.',
+    icon: 'Terminal',
+  },
+  {
+    id: 'ubuntu-2404',
+    name: 'Ubuntu 24.04 LTS (Noble Purr-cise)',
+    distro: 'Ubuntu Linux',
+    tag: '24.04-noble-server',
+    kernel: 'Linux 6.8.0-ubuntu-purr',
+    pkgManager: 'apt / dpkg',
+    shell: '/bin/bash',
+    desc: 'Canonical LTS cloud enterprise image with full systemd unit support, canonical repos, and standard GNU utilities.',
+    icon: 'Server',
+  },
+  {
+    id: 'debian-12',
+    name: 'Debian 12 (Bookworm Tabby)',
+    distro: 'Debian GNU/Linux',
+    tag: '12.5-bookworm-stable',
+    kernel: 'Linux 6.1.0-debian-whisker',
+    pkgManager: 'apt / deb',
+    shell: '/bin/bash',
+    desc: 'Rock-solid stability, zero unvetted packages, standard POSIX compliance, and reference LPIC testing distribution.',
+    icon: 'Cpu',
+  },
+  {
+    id: 'arch-rolling',
+    name: 'Arch Linux (Rolling Paws)',
+    distro: 'Arch Linux',
+    tag: 'rolling-bleeding-edge',
+    kernel: 'Linux 6.9.2-arch-apex',
+    pkgManager: 'pacman',
+    shell: '/bin/zsh',
+    desc: 'Bleeding edge rolling release for fearless senior cat admins. Pacman package manager and Arch User Repository (AUR).',
+    icon: 'Flame',
+  },
+];
